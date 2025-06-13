@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:3000
+
+
+GET {{baseUrl}}/api/jobs
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+
+@baseUrl = http://localhost:3000
+
+GET {{baseUrl}}/app/eldad
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+
+@baseUrl = http://localhost:3000
+
+
+POST {{baseUrl}}/apps
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+    "id": 1,
+    "name": "Eldad"
+}
+

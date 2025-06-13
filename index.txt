@@ -1,0 +1,12 @@
+fs
+http
+
+const http = require('http');
+
+const server = http.createServer((req,res) => {
+    console.log('connection is server')
+})
+
+server.listen(3000, () => {
+    console.log('our God is love')
+})
