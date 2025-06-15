@@ -1,20 +1,52 @@
-const Product = require('./Composite/product');
-const ProductCategory = require('./Composite/productCategory')
+const {Transform} = require('stream');
 
-const someBook = new Product("some book", 29.99);
-const anotherBook = new Product("Another book", 39.99);
-const oneMoreBook = new Product("One more book", 19.99);
+class ChangeText extends Transform{
+    constructor(char){
+        super();
+        this.replaceChar = char;
+    }
 
-const phone = new Product("Iphone", 499.9);
+    _transform(chunk, encoding, callback){
+        const transformedCheck = chunk
+        .toString()
+        .replace(/[a-zA-Z0-9]/g, this.replaceChar);
+        this.push(transformedCheck);
+        callback();
+    }
 
-const offers = new ProductCategory('Books and offers', [
-    new Product("a pen", 1.9),
-    someBook,
-    anotherBook,
-    oneMoreBook
-])
+    _flush(callback){
+        this.push("\nmore chunk of data is being passed\n")
+        callback();
+    }
 
-// console.log("Some Book total", `${someBook.total}`);
-// console.log("Phone Total", `${phone.total}`)
 
-offers.printDetail();
+}
+
+var smileStream = new ChangeText("S");
+
+process.stdin.pipe(smileStream).pipe(process.stdout);
+
+
+
+
+// const fs = require('fs');
+
+// const readStream  = fs.createReadStream('./the-universe.mp4');
+
+// readStream.on('data', (chunk) => {
+//     console.log('read the chunk', chunk.length);
+// })
+
+// readStream.on('end', () => {
+//     console.log('Stream Ended');
+// })
+
+// readStream.on('error', (error) => {
+//     console.error(error);
+// })
+
+// process.stdin.on('data', (chunk) => {
+//     const text = chunk.toString().trim();
+//     console.log('data', text);
+// })
+
